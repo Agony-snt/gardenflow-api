@@ -1,0 +1,2430 @@
+{
+  "openapi": "3.0.3",
+
+  "info": {
+    "title": "GardenFlow API",
+    "description": "Backend API for GardenFlow irrigation management system.",
+    "version": "1.0.0"
+  },
+
+  "servers": [
+    {
+      "url": "http://localhost:4002/api/v1",
+      "description": "Local development server"
+    }
+  ],
+
+  "tags": [
+    {
+      "name": "Authentication",
+      "description": "Authentication and account management"
+    },
+    {
+      "name": "Users",
+      "description": "User management"
+    },
+    {
+      "name": "Gardens",
+      "description": "Garden management"
+    },
+    {
+      "name": "Water Sources",
+      "description": "Water source management"
+    },
+    {
+      "name": "Water Source Schedules",
+      "description": "Water source refill schedules"
+    },
+    {
+      "name": "Sensors",
+      "description": "Sensor management"
+    },
+    {
+      "name": "Sensor Readings",
+      "description": "Sensor measurement readings"
+    },
+    {
+      "name": "Irrigation",
+      "description": "Irrigation status, decisions and control"
+    }
+  ],
+
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Register a new user",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "firstname",
+                  "lastname",
+                  "email",
+                  "phone",
+                  "password"
+                ],
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "ali@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "StrongPassword123"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "firstname",
+                  "lastname",
+                  "email",
+                  "phone",
+                  "password"
+                ],
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "ali@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "StrongPassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "User registered successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "409": {
+            "description": "User already exists."
+          }
+        }
+      }
+    },
+
+    "/auth/login": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Login user",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "identifier",
+                  "password"
+                ],
+                "properties": {
+                  "identifier": {
+                    "type": "string",
+                    "description": "User email or phone number.",
+                    "example": "09121234567"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "StrongPassword123"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "identifier",
+                  "password"
+                ],
+                "properties": {
+                  "identifier": {
+                    "type": "string",
+                    "description": "User email or phone number.",
+                    "example": "09121234567"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "StrongPassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Login successful."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Invalid identifier or password."
+          }
+        }
+      }
+    },
+
+    "/auth/logout": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Logout current user",
+
+        "responses": {
+          "200": {
+            "description": "Logout successful."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      }
+    },
+
+    "/auth/refresh": {
+      "post": {
+        "tags": ["Authentication"],
+        "summary": "Refresh access token",
+
+        "responses": {
+          "200": {
+            "description": "Access token refreshed successfully."
+          },
+          "401": {
+            "description": "Invalid or expired refresh token."
+          }
+        }
+      }
+    },
+
+    "/auth/me": {
+      "get": {
+        "tags": ["Authentication"],
+        "summary": "Get current authenticated user",
+
+        "responses": {
+          "200": {
+            "description": "Current user retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      }
+    },
+
+    "/auth/change-password": {
+      "patch": {
+        "tags": ["Authentication"],
+        "summary": "Change current user's password",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "OldPassword123"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "NewPassword123"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "currentPassword",
+                  "newPassword"
+                ],
+                "properties": {
+                  "currentPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "OldPassword123"
+                  },
+                  "newPassword": {
+                    "type": "string",
+                    "format": "password",
+                    "example": "NewPassword123"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Password changed successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Current password is incorrect or authentication is required."
+          }
+        }
+      }
+    },
+
+    "/users/me": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update current user's profile",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "new@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "new@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Remove current user's profile",
+
+        "responses": {
+          "200": {
+            "description": "Profile removed successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      }
+    },
+
+    "/users": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get all users",
+
+        "responses": {
+          "200": {
+            "description": "Users retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          }
+        }
+      }
+    },
+
+    "/users/{id}": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Get user by ID",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Update user as admin",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email",
+                    "example": "ali@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "USER",
+                      "ADMIN"
+                    ],
+                    "example": "USER"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firstname": {
+                    "type": "string",
+                    "example": "Ali"
+                  },
+                  "lastname": {
+                    "type": "string",
+                    "example": "Ahmadi"
+                  },
+                  "username": {
+                    "type": "string",
+                    "example": "ali123"
+                  },
+                  "email": {
+                    "type": "string",
+                    "example": "ali@example.com"
+                  },
+                  "phone": {
+                    "type": "string",
+                    "example": "09121234567"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "USER",
+                      "ADMIN"
+                    ],
+                    "example": "USER"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "User updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Users"],
+        "summary": "Remove user as admin",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User removed successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+
+    "/users/{id}/activate": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Activate user",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User activated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+
+    "/users/{id}/deactivate": {
+      "patch": {
+        "tags": ["Users"],
+        "summary": "Deactivate user",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User deactivated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+
+    "/gardens": {
+      "get": {
+        "tags": ["Gardens"],
+        "summary": "Get current user's gardens",
+
+        "responses": {
+          "200": {
+            "description": "Gardens retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      },
+
+      "post": {
+        "tags": ["Gardens"],
+        "summary": "Create a garden",
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "area",
+                  "province",
+                  "city",
+                  "latitude",
+                  "longitude"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "My Garden"
+                  },
+                  "area": {
+                    "type": "number",
+                    "description": "Garden area in square meters.",
+                    "example": 3000
+                  },
+                  "province": {
+                    "type": "string",
+                    "example": "Khorasan Razavi"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Mashhad"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "minimum": -90,
+                    "maximum": 90,
+                    "example": 36.2605
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "minimum": -180,
+                    "maximum": 180,
+                    "example": 59.6168
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "area",
+                  "province",
+                  "city",
+                  "latitude",
+                  "longitude"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "My Garden"
+                  },
+                  "area": {
+                    "type": "number",
+                    "example": 3000
+                  },
+                  "province": {
+                    "type": "string",
+                    "example": "Khorasan Razavi"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Mashhad"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "example": 36.2605
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": 59.6168
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Garden created successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}": {
+      "get": {
+        "tags": ["Gardens"],
+        "summary": "Get garden by ID",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      },
+
+      "patch": {
+        "tags": ["Gardens"],
+        "summary": "Update garden",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "My Garden Updated"
+                  },
+                  "area": {
+                    "type": "number",
+                    "example": 3500
+                  },
+                  "province": {
+                    "type": "string",
+                    "example": "Khorasan Razavi"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Mashhad"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "example": 36.2605
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": 59.6168
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "My Garden Updated"
+                  },
+                  "area": {
+                    "type": "number",
+                    "example": 3500
+                  },
+                  "province": {
+                    "type": "string",
+                    "example": "Khorasan Razavi"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "Mashhad"
+                  },
+                  "latitude": {
+                    "type": "number",
+                    "example": 36.2605
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "example": 59.6168
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Garden updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Gardens"],
+        "summary": "Remove garden",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden removed successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/activate": {
+      "patch": {
+        "tags": ["Gardens"],
+        "summary": "Activate garden",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden activated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/deactivate": {
+      "patch": {
+        "tags": ["Gardens"],
+        "summary": "Deactivate garden",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden deactivated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/owner": {
+      "patch": {
+        "tags": ["Gardens"],
+        "summary": "Change garden owner",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "owner"
+                ],
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "example": "66abc123456789"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "owner"
+                ],
+                "properties": {
+                  "owner": {
+                    "type": "string",
+                    "example": "66abc123456789"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Garden owner changed successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "Garden or user not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/user/{userId}": {
+      "get": {
+        "tags": ["Gardens"],
+        "summary": "Get all gardens of a user",
+
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "66abc123456789"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "User gardens retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Admin access required."
+          },
+          "404": {
+            "description": "User not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/dashboard": {
+      "get": {
+        "tags": ["Gardens"],
+        "summary": "Get garden dashboard",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden dashboard retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/water-sources": {
+      "get": {
+        "tags": ["Water Sources"],
+        "summary": "Get garden water sources",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water sources retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      },
+
+      "post": {
+        "tags": ["Water Sources"],
+        "summary": "Create water source",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "type",
+                  "capacity"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Main Pool"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "POOL",
+                      "TANK"
+                    ],
+                    "example": "POOL"
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "example": 50000
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "type",
+                  "capacity"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Main Pool"
+                  },
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "POOL",
+                      "TANK"
+                    ],
+                    "example": "POOL"
+                  },
+                  "capacity": {
+                    "type": "number",
+                    "example": 50000
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Water source created successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/water-sources/{id}": {
+      "get": {
+        "tags": ["Water Sources"],
+        "summary": "Get water source by ID",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      },
+
+      "patch": {
+        "tags": ["Water Sources"],
+        "summary": "Update water source",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Main Pool Updated"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Main Pool Updated"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Water source updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Water Sources"],
+        "summary": "Remove water source",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source removed successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      }
+    },
+
+    "/water-sources/{id}/activate": {
+      "patch": {
+        "tags": ["Water Sources"],
+        "summary": "Activate water source",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source activated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      }
+    },
+
+    "/water-sources/{id}/deactivate": {
+      "patch": {
+        "tags": ["Water Sources"],
+        "summary": "Deactivate water source",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source deactivated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      }
+    },
+
+    "/water-sources/{id}/schedule": {
+      "get": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Get water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source schedule retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Schedule not found."
+          }
+        }
+      },
+
+      "post": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Create water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "frequency",
+                  "startTime"
+                ],
+                "properties": {
+                  "frequency": {
+                    "type": "string",
+                    "enum": [
+                      "WEEKLY",
+                      "MONTHLY"
+                    ],
+                    "example": "WEEKLY"
+                  },
+                  "dayOfWeek": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6,
+                    "description": "0 = Sunday, 1 = Monday, ... 6 = Saturday.",
+                    "example": 1
+                  },
+                  "dayOfMonth": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 31,
+                    "example": 15
+                  },
+                  "startTime": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                    "example": "06:00"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "frequency",
+                  "startTime"
+                ],
+                "properties": {
+                  "frequency": {
+                    "type": "string",
+                    "enum": [
+                      "WEEKLY",
+                      "MONTHLY"
+                    ],
+                    "example": "WEEKLY"
+                  },
+                  "dayOfWeek": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6,
+                    "example": 1
+                  },
+                  "dayOfMonth": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 31,
+                    "example": 15
+                  },
+                  "startTime": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                    "example": "06:00"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Water source schedule created successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Water source not found."
+          }
+        }
+      }
+    },
+
+    "/ws-schedules/{id}": {
+      "patch": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Update water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "frequency": {
+                    "type": "string",
+                    "enum": [
+                      "WEEKLY",
+                      "MONTHLY"
+                    ],
+                    "example": "WEEKLY"
+                  },
+                  "dayOfWeek": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6,
+                    "example": 5
+                  },
+                  "dayOfMonth": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 31,
+                    "example": 15
+                  },
+                  "startTime": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                    "example": "06:00"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "frequency": {
+                    "type": "string",
+                    "enum": [
+                      "WEEKLY",
+                      "MONTHLY"
+                    ],
+                    "example": "WEEKLY"
+                  },
+                  "dayOfWeek": {
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 6,
+                    "example": 5
+                  },
+                  "dayOfMonth": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 31,
+                    "example": 15
+                  },
+                  "startTime": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                    "example": "06:00"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Water source schedule updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Schedule not found."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Delete water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source schedule deleted successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Schedule not found."
+          }
+        }
+      }
+    },
+
+    "/ws-schedules/{id}/activate": {
+      "patch": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Activate water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source schedule activated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Schedule not found."
+          }
+        }
+      }
+    },
+
+    "/ws-schedules/{id}/deactivate": {
+      "patch": {
+        "tags": ["Water Source Schedules"],
+        "summary": "Deactivate water source schedule",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Water source schedule deactivated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Schedule not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/sensors": {
+    "get": {
+        "tags": ["Sensors"],
+        "summary": "Get garden sensors",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Garden sensors retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+    },    
+
+    "post": {
+        "tags": ["Sensors"],
+        "summary": "Create sensor for garden",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+
+                "required": [
+                  "name",
+                  "type"
+                ],
+
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Soil Moisture Sensor"
+                  },
+
+                  "type": {
+                    "type": "string",
+
+                    "enum": [
+                      "AIR_TEMPERATURE",
+                      "SOIL_TEMPERATURE",
+                      "SOIL_MOISTURE",
+                      "WATER_LEVEL"
+                    ],
+
+                    "example": "SOIL_MOISTURE"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+
+                "required": [
+                  "name",
+                  "type"
+                ],
+
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Soil Moisture Sensor"
+                  },
+
+                  "type": {
+                    "type": "string",
+
+                    "enum": [
+                      "AIR_TEMPERATURE",
+                      "SOIL_TEMPERATURE",
+                      "SOIL_MOISTURE",
+                      "WATER_LEVEL"
+                    ],
+
+                    "example": "SOIL_MOISTURE"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Sensor created successfully."
+          },
+          "400": {
+            "description": "Sensor validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+    }
+    },
+
+    "/sensors/{id}": {
+      "get": {
+        "tags": ["Sensors"],
+        "summary": "Get sensor by ID",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Sensor retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      },
+
+      "patch": {
+        "tags": ["Sensors"],
+        "summary": "Update sensor",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Soil Moisture Sensor 01"
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "example": "Soil Moisture Sensor 01"
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "200": {
+            "description": "Sensor updated successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      },
+
+      "delete": {
+        "tags": ["Sensors"],
+        "summary": "Remove sensor",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Sensor removed successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      }
+    },
+
+    "/sensors/{id}/activate": {
+      "patch": {
+        "tags": ["Sensors"],
+        "summary": "Activate sensor",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Sensor activated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      }
+    },
+
+    "/sensors/{id}/deactivate": {
+      "patch": {
+        "tags": ["Sensors"],
+        "summary": "Deactivate sensor",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Sensor deactivated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      }
+    },
+
+    "/sensors/{id}/readings": {
+      "get": {
+        "tags": ["Sensor Readings"],
+        "summary": "Get sensor readings",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Sensor readings retrieved successfully."
+          },
+          "400": {
+            "description": "Invalid query parameters."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      },
+
+      "post": {
+        "tags": ["Sensor Readings"],
+        "summary": "Add sensor reading",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "example": 42
+                  }
+                }
+              }
+            },
+
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "value"
+                ],
+                "properties": {
+                  "value": {
+                    "type": "number",
+                    "example": 42
+                  }
+                }
+              }
+            }
+          }
+        },
+
+        "responses": {
+          "201": {
+            "description": "Sensor reading added successfully."
+          },
+          "400": {
+            "description": "Validation failed."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor not found."
+          }
+        }
+      }
+    },
+
+    "/sensors/{id}/readings/latest": {
+      "get": {
+        "tags": ["Sensor Readings"],
+        "summary": "Get latest sensor reading",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Latest sensor reading retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Access denied."
+          },
+          "404": {
+            "description": "Sensor or reading not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/irrigation/status": {
+      "get": {
+        "tags": ["Irrigation"],
+        "summary": "Get current irrigation status",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Irrigation status retrieved successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/irrigation/decision": {
+      "get": {
+        "tags": ["Irrigation"],
+        "summary": "Get current irrigation decision",
+        "description": "Evaluates current sensor readings, water availability, refill schedule and irrigation history.",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Irrigation decision calculated successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Required irrigation data not found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/irrigation/start": {
+      "post": {
+        "tags": ["Irrigation"],
+        "summary": "Start irrigation manually",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "responses": {
+          "201": {
+            "description": "Irrigation started successfully."
+          },
+          "400": {
+            "description": "Irrigation cannot be started."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden or active water source not found."
+          },
+          "409": {
+            "description": "Irrigation is already running."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/irrigation/stop": {
+      "patch": {
+        "tags": ["Irrigation"],
+        "summary": "Stop current irrigation",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          }
+        ],
+
+        "requestBody": {
+      "required": true,
+
+      "content": {
+        "application/json": {
+          "schema": {
+            "type": "object",
+            "required": [
+              "isComplete"
+            ],
+            "properties": {
+              "isComplete": {
+                "type": "boolean",
+                "description": "Whether the irrigation completed normally or was stopped before completion.",
+                "example": true
+              }
+            }
+          }
+        },
+
+        "application/x-www-form-urlencoded": {
+          "schema": {
+            "type": "object",
+            "required": [
+              "isComplete"
+            ],
+            "properties": {
+              "isComplete": {
+                "type": "boolean",
+                "description": "Whether the irrigation completed normally or was stopped before completion.",
+                "example": true
+              }
+            }
+          }
+        }
+      }
+    },
+
+        "responses": {
+          "200": {
+            "description": "Irrigation stopped successfully."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "No running irrigation found."
+          }
+        }
+      }
+    },
+
+    "/gardens/{id}/irrigation/events": {
+      "get": {
+        "tags": ["Irrigation"],
+        "summary": "Get irrigation history",
+
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "$ref": "#/components/parameters/page"
+          },
+          {
+            "$ref": "#/components/parameters/limit"
+          },
+          {
+            "$ref": "#/components/parameters/from"
+          },
+          {
+            "$ref": "#/components/parameters/to"
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Irrigation events retrieved successfully."
+          },
+          "400": {
+            "description": "Invalid query parameters."
+          },
+          "401": {
+            "description": "Authentication required."
+          },
+          "403": {
+            "description": "Garden access denied."
+          },
+          "404": {
+            "description": "Garden not found."
+          }
+        }
+      }
+    }
+  },
+
+  "components": {
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "example": "66abc123456789"
+      },
+
+      "page": {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 1
+        },
+        "example": 1
+      },
+
+      "limit": {
+        "name": "limit",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "default": 10
+        },
+        "example": 20
+      },
+
+      "from": {
+        "name": "from",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2026-08-13T00:00:00.000Z"
+      },
+
+      "to": {
+        "name": "to",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "example": "2026-08-14T00:00:00.000Z"
+      }
+    }
+  }
+}

@@ -1,0 +1,1473 @@
+{
+  "info": {
+    "_postman_id": "11305ef7-dd08-46c5-8a4b-5564e254fa92",
+    "name": "GardenFlow",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "46348815"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "firstname",
+                  "value": "{{$randomFirstName}}",
+                  "type": "text",
+                  "uuid": "734a2ab2-ecf4-43b6-9959-4c37aa74a537"
+                },
+                {
+                  "key": "lastname",
+                  "value": "{{$randomLastName}}",
+                  "type": "text",
+                  "uuid": "f5d24dc2-d963-43d5-91b5-7552d2d84418"
+                },
+                {
+                  "key": "username",
+                  "value": "{{$randomUserName}}",
+                  "type": "text",
+                  "uuid": "4a348b69-00e9-4e63-b5e3-dcda503600f7"
+                },
+                {
+                  "key": "email",
+                  "value": "{{$randomEmail}}",
+                  "type": "text",
+                  "uuid": "fe4bf874-841b-426a-a18f-a94999c2649c"
+                },
+                {
+                  "key": "phone",
+                  "value": "09121234567",
+                  "type": "text",
+                  "uuid": "39c5ccc1-7222-45da-8659-1cc7302ab271"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "7dd41474-5a24-4f50-98da-ad53737e6feb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/register",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "identifier",
+                  "value": "09121234567",
+                  "type": "text",
+                  "uuid": "c5a386c6-9e3b-40f5-bc7d-94aa665d455e"
+                },
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "78fd7572-3a33-4db7-8625-847477a450cf"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/login",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/logout",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/refresh",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show me",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/me",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Change Passoword",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "currentPassword",
+                  "value": "123",
+                  "type": "text",
+                  "uuid": "96cc51d6-0b5c-42e2-a98f-8858c0642ab9"
+                },
+                {
+                  "key": "newPassword",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "a9160751-c213-455f-b57c-4816d95a665f"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/auth/change-password",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "change-password"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "Admin Routes",
+          "item": [
+            {
+              "name": "Show All",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    ""
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Show One",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/6a7c36a317aca58a0aeb0bd6",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "6a7c36a317aca58a0aeb0bd6"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Update One",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "username",
+                      "value": "reddead1",
+                      "type": "text",
+                      "uuid": "2784b8e0-41a9-4f43-885e-75c0899604e9"
+                    },
+                    {
+                      "key": "firstname",
+                      "value": "John",
+                      "type": "text",
+                      "uuid": "5d728b15-5a71-4836-9f92-1c007d988dcb"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/6a7b14d3acaf8f9ae4fbb1cf",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "6a7b14d3acaf8f9ae4fbb1cf"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Remove One",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/6a7c35c317aca58a0aeb0bd5",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "6a7c35c317aca58a0aeb0bd5"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Activate",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/6a7c36a317aca58a0aeb0bd6/activate",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "6a7c36a317aca58a0aeb0bd6",
+                    "activate"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Deactivate",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/users/6a7c36a317aca58a0aeb0bd6/deactivate",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "users",
+                    "6a7c36a317aca58a0aeb0bd6",
+                    "deactivate"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Update Me",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "TaylorW123",
+                  "type": "text",
+                  "uuid": "bcd061e3-e233-41fe-9553-3990a1820e01"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/users/me",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Account",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "password",
+                  "value": "12345678",
+                  "type": "text",
+                  "uuid": "4c1e6ea3-32ae-4014-94cf-ad18a8f31ca3"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/users/me",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Gardens",
+      "item": [
+        {
+          "name": "Admin Only Routes",
+          "item": [
+            {
+              "name": "Change Owner",
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "key": "newOwnerId",
+                      "value": "6a7b14d3acaf8f9ae4fbb1cf",
+                      "type": "text",
+                      "uuid": "85d9e1fb-7f09-4077-86c1-f5e46efa8b62"
+                    }
+                  ]
+                },
+                "url": {
+                  "raw": "{{port4002}}/api/v1/gardens/6a7c9d463a6c899607dfbfa1/owner",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gardens",
+                    "6a7c9d463a6c899607dfbfa1",
+                    "owner"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "Show All User's Gardens",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{port4002}}/api/v1/gardens/user/6a7b14d3acaf8f9ae4fbb1cf",
+                  "host": [
+                    "{{port4002}}"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "gardens",
+                    "user",
+                    "6a7b14d3acaf8f9ae4fbb1cf"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Get All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "باغ من",
+                  "type": "text",
+                  "uuid": "9a804482-3279-422a-bbeb-aba9d701b38b"
+                },
+                {
+                  "key": "area",
+                  "value": "2500",
+                  "description": "m^2",
+                  "type": "text",
+                  "uuid": "939806ed-f876-4928-a778-61dab7d750a4"
+                },
+                {
+                  "key": "province",
+                  "value": "خراسان رضوی",
+                  "type": "text",
+                  "uuid": "76b504d1-4097-4448-8fda-226ab2e8e826"
+                },
+                {
+                  "key": "city",
+                  "value": "اخلمد",
+                  "type": "text",
+                  "uuid": "8e455228-e070-47b5-a733-ea1c63b37bea"
+                },
+                {
+                  "key": "latitude",
+                  "value": "65.26",
+                  "type": "text",
+                  "uuid": "042aa846-b851-47b4-a87b-85e917f2fffd"
+                },
+                {
+                  "key": "longitude",
+                  "value": "32.61",
+                  "type": "text",
+                  "uuid": "00fccdcb-6539-481b-bad1-1b53c31a0c7c"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get One",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "باغ من",
+                  "type": "text",
+                  "uuid": "4a80d515-bcd4-4bc6-9814-dad2bc5ff1a1"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a7c780806cce9d122afdb39",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a7c780806cce9d122afdb39"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/activate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/deactivate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/dashboard",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "dashboard"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Water Sources",
+      "item": [
+        {
+          "name": "Add One",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "منبع آب",
+                  "type": "text",
+                  "uuid": "cc26160a-fb73-43f6-9493-9d76ecd49724"
+                },
+                {
+                  "key": "type",
+                  "value": "TANK",
+                  "type": "text",
+                  "uuid": "4ae3c049-b15b-477d-ab2f-db3a1b5648d6"
+                },
+                {
+                  "key": "capacity",
+                  "value": "25000",
+                  "type": "text",
+                  "uuid": "cf4bf790-0850-41c8-8c3c-72d5fe85395f"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/water-sources",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "water-sources"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show One",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a95bf357bab18e1e49b39aa",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a95bf357bab18e1e49b39aa"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "منبع آب",
+                  "type": "text",
+                  "uuid": "0284f135-b704-4561-b31b-53f3220bce85"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a95bf357bab18e1e49b39aa",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a95bf357bab18e1e49b39aa"
+              ],
+              "query": [
+                {
+                  "key": "",
+                  "value": null,
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a969661ae482522f9def170",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a969661ae482522f9def170"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a969684ae482522f9def171/activate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a969684ae482522f9def171",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a969684ae482522f9def171/deactivate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a969684ae482522f9def171",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sensors",
+      "item": [
+        {
+          "name": "Show All",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/sensors",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "sensors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add One",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "سنسور اندازی گیری سطح آب",
+                  "type": "text",
+                  "uuid": "f9506dd3-fcd0-4e94-979a-88461a92b4bc"
+                },
+                {
+                  "key": "type",
+                  "value": "WATER_LEVEL",
+                  "type": "text",
+                  "uuid": "c5676086-fb2a-408b-b4c3-f5dd76486a74"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/sensors",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "sensors"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show One",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a969970ae482522f9def176",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a969970ae482522f9def176"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "name",
+                  "value": "Water level calculation",
+                  "type": "text",
+                  "uuid": "d9a48d56-1e0e-4eed-abf2-2d10aa646c5b"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a7d94958d5bd2163bfae91d",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a7d94958d5bd2163bfae91d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a7d94958d5bd2163bfae91d",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a7d94958d5bd2163bfae91d"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a7d9ccd6d33de713a616b5d/activate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a7d9ccd6d33de713a616b5d",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a7d9ccd6d33de713a616b5d/deactivate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a7d9ccd6d33de713a616b5d",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Sensor Readings",
+      "item": [
+        {
+          "name": "Show All Readings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a969970ae482522f9def176/readings",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a969970ae482522f9def176",
+                "readings"
+              ],
+              "query": [
+                {
+                  "key": "from",
+                  "value": "2026-08-13T12:33:30.627Z",
+                  "disabled": true
+                },
+                {
+                  "key": "to",
+                  "value": "2026-08-13T10:56:13.830Z",
+                  "disabled": true
+                },
+                {
+                  "key": "page",
+                  "value": "1",
+                  "type": "text",
+                  "disabled": true
+                },
+                {
+                  "key": "limit",
+                  "value": "3",
+                  "type": "text",
+                  "disabled": true
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add One",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "value",
+                  "value": "25",
+                  "type": "text",
+                  "uuid": "1951888e-8c38-47a9-bb83-9413b0a9dd94"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a969905ae482522f9def173/readings",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a969905ae482522f9def173",
+                "readings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show Latest",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/sensors/6a969970ae482522f9def176/readings/latest",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "sensors",
+                "6a969970ae482522f9def176",
+                "readings",
+                "latest"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Water Source Schedule",
+      "item": [
+        {
+          "name": "Show",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a7d6f45a58011fd749db18c/schedule",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a7d6f45a58011fd749db18c",
+                "schedule"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "frequency",
+                  "value": "WEEKLY",
+                  "type": "text",
+                  "uuid": "d2e36526-0503-48bc-90bc-b6434b7844b1"
+                },
+                {
+                  "key": "dayOfWeek",
+                  "value": "2",
+                  "type": "text",
+                  "uuid": "2de3ef79-4c94-496a-936a-d0ddeefc8f6f"
+                },
+                {
+                  "key": "dayOfMonth",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "8d1de3a7-0d62-453d-8765-beba773cb959"
+                },
+                {
+                  "key": "startTime",
+                  "value": "06:00",
+                  "type": "text",
+                  "uuid": "f3a13960-a266-49ca-87cb-1a87bbbd020e"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources/6a7ca972483199d94e5211cc/schedule",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources",
+                "6a7ca972483199d94e5211cc",
+                "schedule"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "frequency",
+                  "value": "WEEKLY",
+                  "type": "text",
+                  "uuid": "0897c42c-21a7-4898-a44d-c644cbe5ed12"
+                },
+                {
+                  "key": "dayOfWeek",
+                  "value": "2",
+                  "type": "text",
+                  "uuid": "ce3565e6-3371-4f84-8011-ef3d075dc763"
+                },
+                {
+                  "key": "dayOfMonth",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "5a38ab84-0268-4ef4-9f3e-1c6301ca0c29"
+                },
+                {
+                  "key": "startTime",
+                  "value": "",
+                  "type": "text",
+                  "uuid": "700b1daa-ea2d-4292-b166-3dc6b1c3b547"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources-schedule/6a81d85c22b576da4449fe07",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources-schedule",
+                "6a81d85c22b576da4449fe07"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources-schedule/6a81d85c22b576da4449fe07",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources-schedule",
+                "6a81d85c22b576da4449fe07"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Activate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources-schedule/6a81d85c22b576da4449fe07/activate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources-schedule",
+                "6a81d85c22b576da4449fe07",
+                "activate"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Deactivate",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/water-sources-schedule/6a81d85c22b576da4449fe07/deactivate",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "water-sources-schedule",
+                "6a81d85c22b576da4449fe07",
+                "deactivate"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Irrigation",
+      "item": [
+        {
+          "name": "Show Irrigation Status (Latest)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/irrigation/status",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "irrigation",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Irrigation Decision",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/irrigation/decision",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "irrigation",
+                "decision"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Irrigation",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/irrigation/start",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "irrigation",
+                "start"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Stop Irrigation",
+          "request": {
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "isComplete",
+                  "value": "true",
+                  "type": "text",
+                  "uuid": "8ea4411a-766d-4107-af13-4a006115d0d2"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/irrigation/stop",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "irrigation",
+                "stop"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Show Irrigation Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{port4002}}/api/v1/gardens/6a95bdac8a8570056d926526/irrigation/events?page=1&limit=2",
+              "host": [
+                "{{port4002}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "gardens",
+                "6a95bdac8a8570056d926526",
+                "irrigation",
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}
